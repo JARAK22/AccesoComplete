@@ -11,6 +11,9 @@ const AccesoController = {
     const usuario = await AccesoServices.login({ email, password });
     res.status(200).json(usuario);
   },
+  async prueba(req, res) {
+    return res.status(200).json({ mensaje: "Prueba" });
+  },
   async logout(req, res) {
     const { email, password } = req.body;
     const usuario = await AccesoServices.logout({ email, password });

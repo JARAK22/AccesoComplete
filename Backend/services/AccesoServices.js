@@ -2,6 +2,8 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "secret";
 
 const AccesoServices = {
   async register(data){
@@ -17,8 +19,22 @@ const AccesoServices = {
     return newUsuario;
   },
 
-  async login(){
-
+  async login(data){
+    const { email, password } = data;
+    const usuario = await prisma.ususario.findFirst({
+      where: {
+        email,
+      },
+    });
+    if(usuario){
+      const passwordMatch = await bcrypt.compare(password, usuario.password);
+      if(!passwordMatch){
+        return { error: "Contraseña incorrecta" };
+      }else{
+        const token = jwt.sign({ id: usuario.id, email: usuario.email }, SECRET_KEY, { expiresIn: "1d" });
+        return { usuario, token };
+      }
+    }
   },
 
   async logout(){
