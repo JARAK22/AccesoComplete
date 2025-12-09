@@ -38,7 +38,7 @@ const AccesoServices = {
   },
 
   async logout(){
-
+    return true;
   }
 };
 

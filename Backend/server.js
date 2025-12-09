@@ -5,9 +5,9 @@ const RouteAccesso = require("./routes/AccesoRoutes");
 const cors = require("cors")
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"]
+    allowedHeaders: ["Content-Type", "Authorization"]
 }))
 
 app.use(express.json());
